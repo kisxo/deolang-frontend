@@ -20,6 +20,7 @@
 	},
 	"dependencies": {
 		"@svelteuidev/composables": "^0.15.7",
-		"@svelteuidev/core": "^0.15.7"
+		"@svelteuidev/core": "^0.15.7",
+		"axios": "^1.7.9"
 	}
 }
