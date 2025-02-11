@@ -1,12 +1,12 @@
 <script>
-    let {name, description, price, icon, category} = $props()
+    let {name, description, price, icon_url, category} = $props()
     function commingSoon(){
         alert("Comming Soon....!")
     }
 </script>
 
 <div class="card">
-    <img src={icon} alt="">
+    <img src={icon_url} alt="">
     <span class="price">&#8377; {price}</span>
     <span class="name">{name}</span>
     <a class="buy-button" onclick={commingSoon}  href="/" aria-label="buy button">
