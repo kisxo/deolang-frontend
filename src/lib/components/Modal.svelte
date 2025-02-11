@@ -3,7 +3,7 @@
     import { fade } from "svelte/transition";
     import { flyAndScale } from "$lib/bits-ui/utils/transitions";
     import { goto } from "$app/navigation";
-    let { toggle, message, cancel="Close", redirect=''} = $props();
+    let { toggle, message, cancel="Close", redirect='', callback} = $props();
 
     function check_redirect(){
       if(redirect != '')
@@ -21,7 +21,7 @@
             {message}
         </Dialog.Description>
         
-        <Dialog.Close onclick={check_redirect} class="bg-black text-white rounded-xm mx-auto w-[60%] py-[.5rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-98">
+        <Dialog.Close onclick={() => {check_redirect; callback()}} class="bg-black text-white rounded-xm mx-auto w-[60%] py-[.5rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-98">
             <span>{cancel}</span>
         </Dialog.Close>
       </Dialog.Content>
