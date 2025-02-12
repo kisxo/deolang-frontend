@@ -1,9 +1,10 @@
 <script>
     import axios from "axios";
     import { API_URL } from "$lib";
+    import { goto } from "$app/navigation";
 
     import Loader from "$lib/components/Loader.svelte";
-    import { goto } from "$app/navigation";
+    import AdminDashboard from "./AdminDashboard.svelte";
 
     let loader_toggle = $state(true)
     let is_admin = $state(false)
@@ -35,10 +36,8 @@
     <Loader/>
 {:else}
     {#if is_admin}
-        <h2>Is Admin</h2>
+        <AdminDashboard/>
     {:else}
         <h2>Not a Admin</h2>
     {/if}
 {/if}
-
-
