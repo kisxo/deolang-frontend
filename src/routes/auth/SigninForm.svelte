@@ -3,6 +3,7 @@
     import { Client, Account, ID } from "appwrite";
 
     import Modal from "$lib/components/Modal.svelte";
+    import { goto } from "$app/navigation";
 
     const client = new Client()
     .setEndpoint(APPWRITE_API_ENDPOINT)
@@ -28,6 +29,11 @@
         promise.then(function (response) {
             showModal("Signin Successfull", "Continue", "/")
         }, function (error) {
+            if(error.code === 401)
+            {
+                goto("/profile")
+                return
+            }
             showModal(error.message)
         });
     }
