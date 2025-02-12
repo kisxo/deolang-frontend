@@ -4,6 +4,7 @@
     import { Pencil, Trash } from "phosphor-svelte"
 
     import axios from "axios";
+    import Loader from "$lib/components/Loader.svelte";
 
     let products = $state()
 
@@ -16,35 +17,39 @@
     })
 </script>
 
-<table>
-	<thead >
-		<tr>
-            <th class="name">Name</th>
-            <th class="icon">Icon</th>
-            <th class="price">Price</th>
-            <th class="action">Actions</th>
-        </tr>
-	</thead>
-	<tbody>
-        {#each products as product}
-        <tr> 
-            <td class="name">{product['name']}</td>
-            <td class="icon">
-                <img src={product['icon_url']} alt="">
-            </td>
-            <td class="price">Price</td>
-            <td class="action text-white">
-                <button class="bg-blue-300 px-4 py-1 rounded-xs m-1">
-                    <Pencil/>
-                </button>
-                <button class="bg-red-600 px-4 py-1 rounded-xs m-1">
-                    <Trash/>
-                </button>
-            </td>
-		</tr>
-        {/each}
-	</tbody>
-</table>
+{#if products}
+    <table>
+        <thead >
+            <tr>
+                <th class="name">Name</th>
+                <th class="icon">Icon</th>
+                <th class="price">Price</th>
+                <th class="action">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {#each products as product}
+            <tr> 
+                <td class="name">{product['name']}</td>
+                <td class="icon">
+                    <img src={product['icon_url']} alt="">
+                </td>
+                <td class="price">Price</td>
+                <td class="action text-white">
+                    <button class="bg-blue-300 px-4 py-1 rounded-xs m-1">
+                        <Pencil/>
+                    </button>
+                    <button class="bg-red-600 px-4 py-1 rounded-xs m-1">
+                        <Trash/>
+                    </button>
+                </td>
+            </tr>
+            {/each}
+        </tbody>
+    </table>
+{:else}
+    <Loader/>
+{/if}
 
 <style>
     table{
