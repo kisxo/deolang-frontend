@@ -33,6 +33,7 @@
         <Menubar.RadioItem
           class="flex h-10 select-none items-center rounded-button py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-muted"
           value="Admin Dashboard"
+          onclick={() => {goto('/admin/dashboard')}}
         >
           Admin Dashboard
           <Menubar.RadioIndicator class="ml-auto">
@@ -43,6 +44,7 @@
         <Menubar.RadioItem
           class="flex h-10 select-none items-center rounded-button py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-muted"
           value="Profile"
+          onclick={() => {goto('/profile')}}
         >
           Profile
           <Menubar.RadioIndicator class="ml-auto">
@@ -61,12 +63,15 @@
           </Menubar.RadioIndicator>
         </Menubar.RadioItem>
 
+
       </Menubar.RadioGroup>
       <Menubar.Separator />
-      <Menubar.Item
-        class="flex h-10 select-none items-center rounded-button py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-muted"
-        >Log Out</Menubar.Item
-      >
+        <Menubar.Item class="flex h-10 select-none items-center rounded-button py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-muted" onclick={() => {window.location = "/api/docs"}}>
+            Api Docs
+        </Menubar.Item>
+        <Menubar.Item class="flex h-10 select-none items-center rounded-button py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-muted">
+            Log Out
+        </Menubar.Item>
     </Menubar.Content>
   </Menubar.Menu>
 </Menubar.Root>
