@@ -33,7 +33,6 @@
         >
           Admin Dashboard
           <Menubar.RadioIndicator class="ml-auto">
-            <Check class="size-5" />
           </Menubar.RadioIndicator>
         </Menubar.RadioItem>
 
@@ -44,7 +43,6 @@
         >
           Profile
           <Menubar.RadioIndicator class="ml-auto">
-            <Check class="size-5" />
           </Menubar.RadioIndicator>
         </Menubar.RadioItem>
 
@@ -55,7 +53,6 @@
         >
           Login / Signup
           <Menubar.RadioIndicator class="ml-auto">
-            <Check class="size-5" />
           </Menubar.RadioIndicator>
         </Menubar.RadioItem>
 
