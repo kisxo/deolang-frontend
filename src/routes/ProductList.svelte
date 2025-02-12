@@ -8,7 +8,7 @@
 
     let products = $state()
 
-    axios.get(API_URL + '/products/')
+    axios.get(API_URL + '/api/products/')
     .then(function (response) {
         products = response.data.data
     })
