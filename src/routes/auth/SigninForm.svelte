@@ -31,7 +31,7 @@
             withCredentials: true,
         };
 
-        axios.post(API_URL + '/api/auth/login', data, options)
+        axios.post(API_URL + '/api/auth/token', data, options)
         .then((response) => {
             if (response.status ===200)
             {   
