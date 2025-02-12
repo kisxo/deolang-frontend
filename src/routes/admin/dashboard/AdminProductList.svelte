@@ -34,7 +34,7 @@
                 <td class="icon">
                     <img src={product['icon_url']} alt="">
                 </td>
-                <td class="price">Price</td>
+                <td class="price ">Rs. {product['price']}</td>
                 <td class="action text-white">
                     <button class="bg-blue-300 px-4 py-1 rounded-xs m-1">
                         <Pencil/>
