@@ -5,6 +5,7 @@
     import Cookies from "js-cookie";
 
     import Modal from "$lib/components/Modal.svelte";
+    import Loader from "$lib/components/Loader.svelte";
 
     let email = $state('');
     let password = $state('');
@@ -17,6 +18,8 @@
             "redirect": redirect,
         }
     }
+
+    let loader_toggle = $state(false)
 
     async function signin() {
         let data = {
@@ -31,14 +34,17 @@
             withCredentials: true,
         };
 
+        loader_toggle = true
         axios.post(API_URL + '/api/auth/token', data, options)
         .then((response) => {
+            loader_toggle = false
             if (response.status ===200)
             {   
                 showModal(response.data.message, "Continue", "/profile")
             }
         })
         .catch(function (error) {
+            loader_toggle = false
             showModal(error.response.data.detail)
         });
     }
@@ -46,13 +52,17 @@
 
 <div class="signup-form">
 
-    <label for="id"> Email </label>
-    <input type="email" id="email" bind:value={email}>
+    {#if loader_toggle}
+        <Loader/>
+    {:else}
+        <label for="id"> Email </label>
+        <input type="email" id="email" bind:value={email}>
 
-    <label for="password">Password</label>
-    <input type="password" id="password" bind:value={password}>
+        <label for="password">Password</label>
+        <input type="password" id="password" bind:value={password}>
 
-    <button onclick={signin}>Login</button>
+        <button onclick={signin}>Login</button>
+    {/if}
 
 </div>
 
