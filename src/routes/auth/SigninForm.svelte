@@ -1,17 +1,13 @@
 <script>
-    import { APPWRITE_API_ENDPOINT, APPWRITE_PROJECT_ID} from "$lib";
-    import { Client, Account, ID } from "appwrite";
+    import { goto } from "$app/navigation";
+    import { API_URL } from "$lib";
+    import axios from "axios";
+    import Cookies from "js-cookie";
 
     import Modal from "$lib/components/Modal.svelte";
-    import { goto } from "$app/navigation";
 
-    const client = new Client()
-    .setEndpoint(APPWRITE_API_ENDPOINT)
-    .setProject(APPWRITE_PROJECT_ID);
-
-    const account = new Account(client);
-
-    let {email, password} = $state('')
+    let email = $state('');
+    let password = $state('');
     let modal_data = $state();
     function showModal(message, cancel, redirect){
         modal_data = {
@@ -23,18 +19,27 @@
     }
 
     async function signin() {
-       
-        const promise = account.createEmailPasswordSession(email, password);
+        let data = {
+            "email": email,
+            "password": password,
+        };
+        let options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        };
 
-        promise.then(function (response) {
-            showModal("Signin Successfull", "Continue", "/")
-        }, function (error) {
-            if(error.code === 401)
-            {
-                goto("/profile")
-                return
+        axios.post(API_URL + '/api/auth/login', data, options)
+        .then((response) => {
+            if (response.status ===200)
+            {   
+                showModal(response.data.message, "Continue", "/profile")
             }
-            showModal(error.message)
+        })
+        .catch(function (error) {
+            showModal(error.response.data.detail)
         });
     }
 </script>
