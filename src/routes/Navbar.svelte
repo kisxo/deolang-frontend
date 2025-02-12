@@ -1,19 +1,15 @@
 <script>
     import { Menubar } from 'bits-ui';
-    import { House, Cat, Check, ToggleLeft, ToggleRight} from "phosphor-svelte";
+    import { House } from "phosphor-svelte";
     import { flyAndScale } from "$lib/bits-ui/utils/transitions";
     import { goto } from '$app/navigation';
-    let bookmarks = false;
-    let fullUrls = true;
-    let pixelGrid = true;
-    let layoutGrid = false;
-    let view = "table";
-    let profile = "pavel";
+    import { page } from '$app/state';
+
 </script>
 <Menubar.Root
   class="flex flex-colum items-center rounded-10px border border-slate-300 py-[.8rem] bg-background-alt shadow-mini"
 >
-  <a href="/" class="px-2.5 ms-3 items-center me-[auto] text-xs font-bold flex gap-2 bg-blue-100 text-blue-500 border border-blue-500 px-5 py-2 rounded" onclick={() => {profile='Home'}}>
+  <a href="/" class="px-2.5 ms-3 items-center me-[auto] text-xs font-bold flex gap-2 bg-blue-100 text-blue-500 border border-blue-500 px-5 py-2 rounded" >
     <!-- <House color="white" class="size-5" weight="duotone"/> -->
     TechinalSolution
   </a>
@@ -28,7 +24,7 @@
       align="start"
       sideOffset={3}
     >
-      <Menubar.RadioGroup bind:value={profile}>
+      <Menubar.RadioGroup >
 
         <Menubar.RadioItem
           class="flex h-10 select-none items-center rounded-button py-3 pl-3 pr-1.5 text-sm font-medium !ring-0 !ring-transparent data-[highlighted]:bg-muted"
