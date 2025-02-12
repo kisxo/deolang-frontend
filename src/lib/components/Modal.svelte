@@ -21,7 +21,7 @@
             {message}
         </Dialog.Description>
         
-        <Dialog.Close onclick={() => {check_redirect; callback()}} class="bg-black text-white rounded-xm mx-auto w-[60%] py-[.5rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-98">
+        <Dialog.Close onclick={() => {check_redirect(); callback()}} class="bg-black text-white rounded-xm mx-auto w-[60%] py-[.5rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-98">
             <span>{cancel}</span>
         </Dialog.Close>
       </Dialog.Content>
