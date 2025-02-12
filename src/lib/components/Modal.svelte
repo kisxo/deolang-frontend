@@ -3,7 +3,7 @@
     import { fade } from "svelte/transition";
     import { flyAndScale } from "$lib/bits-ui/utils/transitions";
     import { goto } from "$app/navigation";
-    let { toggle, message, cancel="Close", redirect='', callback} = $props();
+    let { toggle, message, cancel="Close", redirect='', callback = ()=>{}} = $props();
 
     function check_redirect(){
       if(redirect != '')
