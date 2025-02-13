@@ -1,16 +1,12 @@
 <script>
-    import { APPWRITE_API_ENDPOINT, APPWRITE_PROJECT_ID} from "$lib";
-    import { Client, Account, ID } from "appwrite";
+    import axios from "axios";
+    import { API_URL } from "$lib";
 
     import Modal from "$lib/components/Modal.svelte";
-
-    const client = new Client()
-    .setEndpoint(APPWRITE_API_ENDPOINT)
-    .setProject(APPWRITE_PROJECT_ID);
-
-    const account = new Account(client);
+    import Loader from "$lib/components/Loader.svelte";
 
     let {email, password, cpassword} = $state('')
+    let loader_toggle = $state(false)
     let modal_data = $state();
     function showModal(message, cancel, redirect, callback){
         modal_data = {
@@ -28,30 +24,56 @@
             showModal("Password Does Not Match !")
             return
         }
-        
-        const promise = account.create(ID.unique(), email, password);
 
-        promise.then(function (response) {
-            showModal("Signup Successfull", 'Login', '', () => {location.reload()})
+        let data = {
+            "email": email,
+            "password": password,
+        };
+        let options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        };
 
-        }, function (error) {
-            showModal(error.message)
+        loader_toggle = true
+        axios.post(API_URL + '/api/users/', data, options)
+        .then((response) => {
+            loader_toggle = false
+            if (response.status ===201)
+            {   
+                showModal("Signup Successful", "Login", "/profile")
+            }
+        })
+        .catch(function (error) {
+            loader_toggle = false
+            
+            if(error.response.status === 422)
+            {   
+                showModal("Invalid input data !")
+            }
         });
     }
 </script>
 
 <div class="signup-form">
+    {#if loader_toggle}
+        <Loader/>
+    {:else}
+        <label for="id"> Email </label>
+        <input type="email" id="email" bind:value={email}>
 
-    <label for="id"> Email </label>
-    <input type="email" id="email" bind:value={email}>
+        <label for="password">Password</label>
+        <input type="password" id="password" bind:value={password}>
 
-    <label for="password">Password</label>
-    <input type="password" id="password" bind:value={password}>
+        <label for="cpassword">Confirm Password</label>
+        <input type="password" id="cpassword" bind:value={cpassword}>
 
-    <label for="cpassword">Confirm Password</label>
-    <input type="password" id="cpassword" bind:value={cpassword}>
+        <button onclick={signup}>Register</button>
+    {/if}
 
-    <button onclick={signup}>Register</button>
+
 
 </div>
 
