@@ -20,7 +20,7 @@
     }
     function logout()
     {
-      axios.delete(API_URL + '/auth/token/', {withCredentials: true})
+      axios.delete(API_URL + '/auth/token', {withCredentials: true})
       .then((response) => {
         if(response.status === 200)
         {
