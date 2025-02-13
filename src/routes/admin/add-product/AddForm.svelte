@@ -7,7 +7,9 @@
     import Loader from "$lib/components/Loader.svelte";
     import Modal from "$lib/components/Modal.svelte";
 
-    let loader_toggle = $state(false)
+    let loader_toggle = $state(false);
+    let file_uploading = $state(false);
+    let img_url = $state();
     let modal_data = $state();
     function showModal(message, cancel, redirect){
         modal_data = {
@@ -24,7 +26,7 @@
         if (files) {
 			console.log(files);
 
-			for (const file of files) {
+			for (const file of files) {     
 				uploadImage(file)
 			}
 		}
@@ -32,6 +34,7 @@
 
     async function uploadImage(file)
     {
+      file_uploading = true
       const form = new FormData();
       form.append('file', file);
 
@@ -50,10 +53,14 @@
         {
           file_id = response.data.data['$id']
           bucket_id = response.data.data['bucketId']
+          img_url = response.data.data['file_url']
         }
       })
       .catch(function (error) {
         loader_toggle = false
+      })
+      .finally( function() {
+        file_uploading = false
       });
     }
 
@@ -104,23 +111,19 @@
   <Loader/>
 {:else}
  <div>
+  {#if file_uploading}
+    <div class="product-icon py-5">
+      <Loader/>
+    </div>
+  {:else if img_url}
+    <img class="product-icon py-5" src={img_url} alt="product icon">
+  {/if}
+  
   <div class="col-span-full">
-      <label for="cover-photo" class="block text-sm font-medium text-gray-900">Product Icon</label>
-      <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-        <div class="text-center">
-          <svg class="mx-auto size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
-            <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
-          </svg>
-          <div class="mt-4 flex text-sm/6 text-gray-600">
-            <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-indigo-500">
-              <span>Upload a file</span>
-              <input id="file-upload" name="file-upload" type="file" bind:files={files} onchange={handleImage} class="sr-only">
-            </label>
-            <p class="pl-1">or drag and drop</p>
-          </div>
-          <p class="text-xs/5 text-gray-600">PNG, JPG, GIF up to 5MB</p>
-        </div>
-      </div>
+      <label for="file-upload" class="text-gray-900 font-semibold mb-2 block">Upload file</label>
+      <input id="file-upload"type="file" bind:files={files} onchange={handleImage}
+        class="w-full text-gray-400 font-semibold text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-2 file:px-4 file:mr-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-gray-500 rounded" />
+      <p class="text-xs text-gray-400 mt-2">PNG, JPG SVG, WEBP, and GIF are Allowed.</p>
     </div>
 
     <div class="col-span-full my-5">
@@ -161,3 +164,11 @@
 {/if}
 
 <Modal {...modal_data}/>
+
+<style>
+  .product-icon{
+    max-height: 200px;
+    object-fit: contain;
+    margin-inline: auto;
+  }
+</style>
