@@ -1,11 +1,12 @@
 <script>
     import { API_URL } from "$lib";
     import { get } from "svelte/store";
-    import { Pencil, Trash } from "phosphor-svelte"
+    import { Goggles, Pencil, Trash } from "phosphor-svelte"
 
     import axios from "axios";
     import Loader from "$lib/components/Loader.svelte";
     import Modal from "$lib/components/Modal.svelte";
+    import { goto } from "$app/navigation";
 
     let loader_toggle = $state(false)
     let products = $state()
@@ -64,6 +65,10 @@
         })
     }
 
+    async function editProduct(productId){
+        goto('/admin/edit-product/' + productId)
+    }
+
 </script>
 
 {#if loader_toggle}
@@ -90,10 +95,10 @@
                 </td>
                 <td class="price ">Rs. {product['price']}</td>
                 <td class="action text-white">
-                    <button class="bg-blue-300 px-6 py-2 rounded-xs m-1">
+                    <button class="bg-blue-300 px-6 py-2 rounded-xs m-1" onclick={ () => { editProduct(product['$id']) }} >
                         <Pencil/>
                     </button>
-                    <button class="bg-red-600 px-6 py-2 rounded-xs m-1" onclick={ () => { deleteProduct(product['$id'])}}>
+                    <button class="bg-red-600 px-6 py-2 rounded-xs m-1" onclick={ () => { deleteProduct(product['$id'])}} >
                         <Trash/>
                     </button>
                 </td>
