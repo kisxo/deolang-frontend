@@ -1,10 +1,10 @@
 <script>
-    import ProductCard from "./ProductCard.svelte";
-
     import { API_URL } from "$lib";
     import { get } from "svelte/store";
-
     import axios from "axios";
+
+    import ProductCard from "./ProductCard.svelte";
+    import Loader from "$lib/components/Loader.svelte";
 
     let products = $state()
 
@@ -17,11 +17,15 @@
     })   
 </script>
 
-<div class="list">
-    {#each products as product}
-        <ProductCard {...product}></ProductCard>
-    {/each}
-</div>
+{#if products}
+    <div class="list">
+        {#each products as product}
+            <ProductCard {...product}></ProductCard>
+        {/each}
+    </div>
+{:else}
+    <Loader/>
+{/if}
 
 <style>
     .list{
