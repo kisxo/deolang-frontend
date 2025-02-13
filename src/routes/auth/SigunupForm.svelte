@@ -25,6 +25,13 @@
             return
         }
 
+        if(password.length < 8)
+        {
+            
+            showModal("Password length must be atleast 8 characters !")
+            return
+        }
+
         let data = {
             "email": email,
             "password": password,
