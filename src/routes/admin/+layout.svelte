@@ -1,14 +1,13 @@
 <script>
-    import AdminProductList from "./dashboard/AdminProductList.svelte";
-    import { PlusCircle } from "phosphor-svelte"
-
     let { children } = $props();
-
+    import { PlusCircle } from "phosphor-svelte"
     import axios from "axios";
     import { API_URL } from "$lib";
     import { goto } from "$app/navigation";
+    import { page } from "$app/state";
 
     import Loader from "$lib/components/Loader.svelte";
+    import AdminProductList from "./dashboard/AdminProductList.svelte";
 
     let loader_toggle = $state(true)
     let is_admin = $state(false)
@@ -43,9 +42,11 @@
         <div class="admin-dashboard">
             <div class="title text-slate-800 ">
                 <a href="/admin/dashboard" class="me-auto flex items-center">Admin Dashboard</a>
-                <a href="/admin/add-product" class="flex items-center border-1 p-[.2rem] border-slate-400 rounded">
-                    <PlusCircle/>Add Product
-                </a>
+                {#if page.url.pathname === '/admin/dashboard'}
+                    <a href="/admin/add-product" class="flex items-center border-1 p-[.2rem] border-slate-400 rounded">
+                        <PlusCircle/>Add Product
+                    </a>
+                {/if}
             </div>
             {@render children?.()}
         </div>
